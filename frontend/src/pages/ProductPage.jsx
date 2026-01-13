@@ -68,8 +68,8 @@ const ProductPage = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-8">
-      <Link to="/" className="inline-flex items-center text-gray-500 hover:text-black mb-8 transition-colors group">
-        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+      <Link to="/" className="inline-flex items-center text-black hover:text-gray-600 mb-8 transition-colors group">
+        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform text-black hover:text-gray-600" />
         Back to Products
       </Link>
 
