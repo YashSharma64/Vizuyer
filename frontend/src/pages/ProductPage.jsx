@@ -7,7 +7,9 @@ import FeedbackModal from '../components/FeedbackModal';
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [activeImage, setActiveImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -15,20 +17,53 @@ const ProductPage = () => {
     const foundProduct = getProductById(id);
     if (foundProduct) {
       setProduct(foundProduct);
-      setActiveImage(foundProduct.images[0]);
+      setCurrentImageIndex(0);
     }
   }, [id]);
 
-  if (!product || !activeImage) {
+  if (!product) {
     return <div className="min-h-[60vh] flex items-center justify-center">Loading...</div>;
   }
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setStartX(e.clientX);
+    setIsZoomed(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setIsZoomed(false);
+  };
+
   const handleMouseMove = (e) => {
-    if (!isZoomed) return;
-    const { left, top, width, height } = e.target.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    e.target.style.transformOrigin = `${x}% ${y}%`;
+    if (isDragging) {
+      e.preventDefault();
+      const sensitivity = 15; 
+      const delta = e.clientX - startX;
+      
+      if (Math.abs(delta) > sensitivity) {
+        const direction = delta > 0 ? 1 : -1;
+        const newIndex = (currentImageIndex - direction + product.images.length) % product.images.length;
+        setCurrentImageIndex(newIndex);
+        setStartX(e.clientX);
+      }
+    } else {
+       if (!isZoomed) return;
+       const { left, top, width, height } = e.target.getBoundingClientRect();
+       const x = ((e.clientX - left) / width) * 100;
+       const y = ((e.clientY - top) / height) * 100;
+       e.target.style.transformOrigin = `${x}% ${y}%`;
+    }
+  };
+
+  const toggleZoom = () => {
+    setIsZoomed(!isZoomed);
   };
 
   return (
@@ -43,27 +78,37 @@ const ProductPage = () => {
         <div className="lg:w-3/5 flex flex-col items-center">
           
           <div 
-            className="w-full aspect-square bg-gray-50 rounded-xl overflow-hidden relative cursor-zoom-in mb-6 group"
-            onMouseEnter={() => setIsZoomed(true)}
-            onMouseLeave={() => setIsZoomed(false)}
+            className={`w-full aspect-square bg-gray-50 rounded-xl overflow-hidden relative mb-6 group select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
           >
+            <div className="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-500 pointer-events-none">
+              Drag to Rotate • Click to Zoom
+            </div>
+            
             <img 
-              src={activeImage.src} 
-              alt={activeImage.alt}
-              className={`w-full h-full object-contain mix-blend-multiply transition-transform duration-200 ease-out ${isZoomed ? 'scale-150' : 'scale-100'}`}
+              src={product.images[currentImageIndex].src} 
+              alt={product.images[currentImageIndex].alt}
+              onClick={toggleZoom}
+              className={`w-full h-full object-contain mix-blend-multiply transition-transform duration-200 ease-out ${isZoomed ? 'scale-150 cursor-zoom-out' : 'scale-100 cursor-zoom-in'}`}
+              draggable="false"
             />
           </div>
 
-          <p className="text-sm text-gray-500 mb-4">Explore the product from different angles</p>
+          <p className="text-sm text-gray-500 mb-4">View from: <span className="font-semibold text-gray-900">{product.images[currentImageIndex].label}</span></p>
 
           <div className="flex gap-4">
-            {product.images.map((img) => (
+            {product.images.map((img, index) => (
               <button
                 key={img.id}
-                onClick={() => setActiveImage(img)}
+                onClick={() => {
+                  setCurrentImageIndex(index);
+                  setIsZoomed(false);
+                }}
                 className={`w-20 h-20 rounded-lg border-2 p-1 transition-all ${
-                  activeImage.id === img.id 
+                  index === currentImageIndex 
                     ? 'border-black bg-gray-50' 
                     : 'border-transparent hover:border-gray-200 bg-gray-50'
                 }`}
