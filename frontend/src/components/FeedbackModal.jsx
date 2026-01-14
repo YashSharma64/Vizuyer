@@ -8,11 +8,39 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
   const [hoverRating, setHoverRating] = useState(0);
   const [confidence, setConfidence] = useState(null);
 
-  const handleSubmit = (e) => {
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Feedback Submitted");
-    onClose();
-    alert("Thank you for your feedback!");
+    if (rating === 0 || !confidence) {
+      alert("Please provide a rating and your confidence level.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch("http://localhost:5001/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rating, confidence, comment, productName })
+      });
+
+      if (response.ok) {
+        onClose();
+        alert("Thank you for your feedback!");
+      } else {
+        const data = await response.json();
+        console.error("Failed to submit feedback:", data);
+        alert(data.error || "Failed to submit feedback. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      alert("Network error. Please make sure the server is running.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -93,14 +121,21 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
               className="w-full border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all resize-none"
               rows="3"
               placeholder="e.g., I couldn't see the charging port..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             ></textarea>
           </div>
 
           <button 
             type="submit"
-            className="w-full bg-black text-white py-3 rounded-xl font-medium shadow-lg hover:bg-gray-200 transition-all hover:shadow-xl active:scale-[0.98] hover:text-black cursor-pointer ease-in-out"
+            disabled={isSubmitting || rating === 0 || !confidence}
+            className={`w-full py-3 rounded-xl font-medium shadow-lg transition-all transform active:scale-[0.98] ease-in-out ${
+              isSubmitting || rating === 0 || !confidence
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed shadow-none'
+                : 'bg-black text-white hover:bg-gray-200 hover:text-black hover:shadow-xl'
+            }`}
           >
-            Submit Feedback
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
           </button>
         </form>
       </div>

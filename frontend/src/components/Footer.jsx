@@ -5,7 +5,6 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const scrollToAbout = () => {
-    // Navigate home if not there, otherwise scroll
     if (window.location.pathname !== '/') {
       navigate('/#about');
     } else {
@@ -41,7 +40,6 @@ const Footer = () => {
           <span className="text-gray-300">·</span>
           <button 
             className="hover:text-black transition-colors cursor-pointer text-gray-300"
-            // Placeholder for Feedback - likely to open a modal in future
           >
             Feedback
           </button>

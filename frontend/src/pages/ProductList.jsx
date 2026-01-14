@@ -18,9 +18,6 @@ const ProductList = () => {
   return (
     <div className="mx-auto px-6 md:px-12 py-16 bg-gray-200 rounded-2xl">
       <div className="mb-20 text-center max-w-3xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-800">
-          
-        </div>
         <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
           Visual Confidence.
         </h1>
