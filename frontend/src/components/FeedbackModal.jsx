@@ -21,7 +21,8 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("http://localhost:5001/feedback", {
+      const API = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001";
+      const response = await fetch(`${API}/feedback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rating, confidence, comment, productName })
