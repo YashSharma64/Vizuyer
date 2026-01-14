@@ -136,14 +136,14 @@ const ProductPage = () => {
 
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-8">
             <p className="text-sm text-gray-500 flex items-start gap-2">
-              <span className="text-lg">💡</span> 
+              <span className="text-lg"></span> 
               {product.trustMessage}
             </p>
           </div>
 
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="w-full bg-black text-white text-lg font-medium py-4 rounded-xl hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl transform active:scale-[0.98] transition-all hover:text-black cursor-pointer ease-in-out"
+            className="w-[70%] mx-auto bg-black text-white text-lg font-medium py-4 rounded-2xl hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl transform active:scale-[0.98] transition-all hover:text-black cursor-pointer ease-in-out"
           >
             Give Feedback
           </button>
