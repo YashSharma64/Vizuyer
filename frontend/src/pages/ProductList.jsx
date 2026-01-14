@@ -17,8 +17,8 @@ const ProductList = () => {
 
   return (
     <div className="mx-auto px-6 md:px-12 py-16 bg-gray-200 rounded-2xl">
-      <div className="mb-20 text-center max-w-3xl mx-auto space-y-6">
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
+      <div className="mb-20 text-center max-w-3xl mx-auto space-y-6 mt-15">
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-blue-950">
           Visual Confidence.
         </h1>
         <p className="text-xl text-gray-500 leading-relaxed">
@@ -27,12 +27,12 @@ const ProductList = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
           <Link 
             key={product.id} 
             to={`/product/${product.id}`}
-            className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 transition-all duration-300 transform hover:-translate-y-1"
+            className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="aspect-[4/3] bg-gray-50 p-8 flex items-center justify-center relative overflow-hidden">
               <img 
@@ -58,7 +58,7 @@ const ProductList = () => {
                 </p>
                 <div className="flex items-center gap-1">
                   <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span className="text-sm font-medium text-gray-700">4.9</span>
+                  <span className="text-sm font-medium text-gray-700">4.5</span>
                   <span className="text-sm text-gray-400">(128 reviews)</span>
                 </div>
               </div>

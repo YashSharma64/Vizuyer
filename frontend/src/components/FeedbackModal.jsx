@@ -46,16 +46,16 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-black/20 backdrop-blur-[2px] transition-opacity"
         onClick={onClose}
       />
       
-      <div className="relative bg-white rounded-2xl w-full max-w-md p-8 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative bg-white rounded-2xl w-full max-w-md p-8 transform transition-all animate-in fade-in zoom-in-95 duration-200">
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors cursor-pointer"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5 cursor-pointer" />
         </button>
 
         <h2 className="text-2xl font-bold mb-2">Your Feedback</h2>
@@ -69,7 +69,7 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Did the images help you understand the product?
             </label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 cursor-pointer">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
@@ -77,7 +77,7 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHoverRating(star)}
                   onMouseLeave={() => setHoverRating(0)}
-                  className="focus:outline-none transition-transform hover:scale-110"
+                  className="focus:outline-none transition-transform hover:scale-110 cursor-pointer"
                 >
                   <Star 
                     className={`w-8 h-8 ${

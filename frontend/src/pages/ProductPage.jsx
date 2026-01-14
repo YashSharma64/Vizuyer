@@ -54,16 +54,18 @@ const ProductPage = () => {
         setStartX(e.clientX);
       }
     } else {
-       if (!isZoomed) return;
-       const { left, top, width, height } = e.target.getBoundingClientRect();
+       // Enable zoom on hover
+       if (!isZoomed) setIsZoomed(true);
+       
+       const container = e.currentTarget;
+       const img = container.querySelector('img');
+       if (!img) return;
+
+       const { left, top, width, height } = container.getBoundingClientRect();
        const x = ((e.clientX - left) / width) * 100;
        const y = ((e.clientY - top) / height) * 100;
-       e.target.style.transformOrigin = `${x}% ${y}%`;
+       img.style.transformOrigin = `${x}% ${y}%`;
     }
-  };
-
-  const toggleZoom = () => {
-    setIsZoomed(!isZoomed);
   };
 
   return (
@@ -83,16 +85,16 @@ const ProductPage = () => {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsZoomed(true)}
           >
             <div className="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-500 pointer-events-none">
-              Drag to Rotate • Click to Zoom
+              Drag to Rotate • Hover to Zoom
             </div>
             
             <img 
               src={product.images[currentImageIndex].src} 
               alt={product.images[currentImageIndex].alt}
-              onClick={toggleZoom}
-              className={`w-full h-full object-contain mix-blend-multiply transition-transform duration-200 ease-out ${isZoomed ? 'scale-150 cursor-zoom-out' : 'scale-100 cursor-zoom-in'}`}
+              className={`w-full h-full object-contain mix-blend-multiply transition-transform duration-200 ease-out ${isZoomed ? 'scale-150' : 'scale-100'}`}
               draggable="false"
             />
           </div>

@@ -49,7 +49,7 @@ const Navbar = () => {
     
           <div className="flex items-center gap-3">
             <button 
-              className="bg-gray-800 text-white px-14 py-4 rounded-full text-lg font-medium hover:bg-gray-200 transition-all flex items-center gap-1.5 group hover:text-gray-800 cursor-pointer" 
+              className="bg-gray-800 text-white px-14 py-4 rounded-full text-lg font-medium hover:bg-gray-200 transition-all flex items-center gap-1.5 group hover:text-black cursor-pointer" 
               onClick={scrollToAbout}
             >
               About Us
