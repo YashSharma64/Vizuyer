@@ -98,7 +98,7 @@ const FeedbackModal = ({ isOpen, onClose, productName }) => {
 
           <button 
             type="submit"
-            className="w-full bg-black text-white py-3 rounded-xl font-medium shadow-lg hover:bg-gray-800 transition-all hover:shadow-xl active:scale-[0.98]"
+            className="w-full bg-black text-white py-3 rounded-xl font-medium shadow-lg hover:bg-gray-200 transition-all hover:shadow-xl active:scale-[0.98] hover:text-black cursor-pointer ease-in-out"
           >
             Submit Feedback
           </button>

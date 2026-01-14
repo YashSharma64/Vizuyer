@@ -141,7 +141,7 @@ const ProductPage = () => {
 
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="w-full bg-black text-white text-lg font-medium py-4 rounded-xl hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform active:scale-[0.98] transition-all"
+            className="w-full bg-black text-white text-lg font-medium py-4 rounded-xl hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl transform active:scale-[0.98] transition-all hover:text-black cursor-pointer ease-in-out"
           >
             Give Feedback
           </button>

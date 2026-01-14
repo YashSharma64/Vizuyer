@@ -40,9 +40,7 @@ const Navbar = () => {
           
           
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate('/')}>
-            <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:bg-gray-900 transition-colors">
-              V
-            </div>
+            <img src="./vlogonew.png" alt="" srcset="" className="w-10 h-10 rounded-[50px]"></img>
             <span className="text-lg font-bold tracking-tight text-gray-900">
               Vizuyer
             </span>
